@@ -7,6 +7,7 @@ Luaのみで実装された、Neovim用の高速でGit連携対応のファイ�
 ## 名前の由来
 
 **nvpm-tree.nvim**は以下を組み合わせたものです：
+
 - **nvpm** = **N**eo**v**im **P**ackage **M**anager（親プロジェクト）
 - **tree** = ファイルツリーエクスプローラー
 - **.nvim** = Neovimプラグインの命名規則
@@ -56,26 +57,31 @@ vpm-tree.vimとは異なり、別プロセスのCLIやJSON境界は存在しま�
 
 ```lua
 {
-  "kouji/nvpm-tree.nvim", -- ローカルパスの場合: dir = "~/dev/nvpm-tree.nvim"
+  "ue555/nvpm-tree.nvim", -- ローカルパスの場合: dir = "~/dev/nvpm-tree.nvim"
   opts = {},
 }
 ```
 
-### [packer.nvim](https://github.com/wbthomason/packer.nvim)を使用
+### nvpmを使用
+
+`plugins.json`に以下を追加：
+
+```json
+{
+  "plugins": ["ue555/nvpm-tree.nvim"]
+}
+```
+
+`init.lua`に以下を追加：
 
 ```lua
-use({
-  "kouji/nvpm-tree.nvim",
-  config = function()
-    require("nvpm-tree").setup({})
-  end,
-})
+require("nvpm-tree").setup({})
 ```
 
 ### 手動インストール
 
 ```bash
-git clone https://github.com/kouji/nvpm-tree.nvim.git \
+git clone https://github.com/ue555/nvpm-tree.nvim.git \
   ~/.local/share/nvim/site/pack/plugins/start/nvpm-tree.nvim
 ```
 
@@ -115,40 +121,44 @@ nvpm-tree.nvimはPure Luaのため、ビルド手順は不要です。
 
 ツリーウィンドウ内：
 
-| キー | 動作 |
-|------|------|
-| `<CR>`, `o` | ファイル/ディレクトリを開く（ディレクトリは展開/折りたたみ） |
-| `l` | ディレクトリを展開 |
-| `h` | ディレクトリを折りたたむ |
-| `<Space>`, `za` | 展開/折りたたみをトグル |
-| `a` | 新しいファイルを作成 |
-| `A` | 新しいディレクトリを作成 |
-| `d` | ファイル/ディレクトリを削除 |
-| `r` | ファイル/ディレクトリをリネーム |
-| `R`, `<F5>` | ツリーをリフレッシュ |
-| `q` | ツリーを閉じる |
-| `j/k` | 上下に移動 |
-| `-`, `u` | 親ディレクトリに移動 |
-| `C` | カーソル下のディレクトリをルートに変更 |
-| `?` | ヘルプを表示 |
+| キー            | 動作                                                         |
+| --------------- | ------------------------------------------------------------ |
+| `<CR>`, `o`     | ファイル/ディレクトリを開く（ディレクトリは展開/折りたたみ） |
+| `l`             | ディレクトリを展開                                           |
+| `h`             | ディレクトリを折りたたむ                                     |
+| `<Space>`, `za` | 展開/折りたたみをトグル                                      |
+| `a`             | 新しいファイルを作成                                         |
+| `A`             | 新しいディレクトリを作成                                     |
+| `d`             | ファイル/ディレクトリを削除                                  |
+| `r`             | ファイル/ディレクトリをリネーム                              |
+| `R`, `<F5>`     | ツリーをリフレッシュ                                         |
+| `q`             | ツリーを閉じる                                               |
+| `j/k`           | 上下に移動                                                   |
+| `-`, `u`        | 親ディレクトリに移動                                         |
+| `C`             | カーソル下のディレクトリをルートに変更                       |
+| `?`             | ヘルプを表示                                                 |
 
 ### ファイル操作
 
 nvpm-tree.nvimは、ツリーから直接以下のファイル操作をサポートします：
 
 #### ファイル作成 (`a`)
+
 `a`を押すと、カレントディレクトリ（カーソルがファイル上にある場合は親ディレクトリ）に
 新しいファイルを作成します。ファイル名の入力を求められます。
 
 #### ディレクトリ作成 (`A`)
+
 `A`を押すと、カレントディレクトリ（カーソルがファイル上にある場合は親ディレクトリ）に
 新しいディレクトリを作成します。ディレクトリ名の入力を求められます。
 
 #### 削除 (`d`)
+
 `d`を押すと、カーソル位置のファイル/ディレクトリを削除します。削除前に確認を求められます。
 ディレクトリの場合、内容はすべて再帰的に削除されます。
 
 #### リネーム (`r`)
+
 `r`を押すと、カーソル位置のファイル/ディレクトリをリネームします。新しい名前の入力を求められます。
 リネーム対象を開いているバッファは自動的に新しいパスに追従します。
 
@@ -219,11 +229,13 @@ nvpm-tree.nvimは`git status --porcelain`を解析し、豊富なGit統合を提
 ## 比較
 
 ### vs vpm-tree.vim
+
 - 💪 外部のGo製CLIバイナリのビルド・インストールが不要
 - ⚡ `vim.loop`によりプロセス内で完結、JSONのやり取りなし
 - ✅ Neovimネイティブ：`<Plug>`マッピング、`vim.keymap.set`、Luaの`setup()`
 
 ### vs nvim-tree.lua / neo-tree.nvim
+
 - 🔧 vpm-tree.vimのUI/UXをそのまま踏襲した、シンプルで単機能な実装
 - 📝 vpm-tree.vimと同じキーバインド・ファイル操作ワークフロー
 
@@ -255,6 +267,7 @@ MIT License
 
 nvpm-tree.nvimは[vpm-tree.vim](https://github.com/ue555/vpm-tree.vim)の
 Neovim移植版です。vpm-tree.vim自体は以下からインスピレーションを得ています：
+
 - [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
 - [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 - [NERDTree](https://github.com/preservim/nerdtree)

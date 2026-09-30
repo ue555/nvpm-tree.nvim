@@ -7,6 +7,7 @@ A blazing-fast, git-aware file tree explorer for Neovim, implemented entirely in
 ## Name Origin
 
 **nvpm-tree.nvim** combines:
+
 - **nvpm** = **N**eo**v**im **P**ackage **M**anager (the parent project)
 - **tree** = File tree explorer
 - **.nvim** = Neovim plugin naming convention
@@ -57,26 +58,31 @@ scanning, rendering, and state management all run in-process as Lua.
 
 ```lua
 {
-  "kouji/nvpm-tree.nvim", -- or a local path: dir = "~/dev/nvpm-tree.nvim"
+  "ue555/nvpm-tree.nvim", -- or a local path: dir = "~/dev/nvpm-tree.nvim"
   opts = {},
 }
 ```
 
-### Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
+### Using nvpm
+
+Add to your `plugins.json`:
+
+```json
+{
+  "plugins": ["ue555/nvpm-tree.nvim"]
+}
+```
+
+Then add to your `init.lua`:
 
 ```lua
-use({
-  "kouji/nvpm-tree.nvim",
-  config = function()
-    require("nvpm-tree").setup({})
-  end,
-})
+require("nvpm-tree").setup({})
 ```
 
 ### Manual Installation
 
 ```bash
-git clone https://github.com/kouji/nvpm-tree.nvim.git \
+git clone https://github.com/ue555/nvpm-tree.nvim.git \
   ~/.local/share/nvim/site/pack/plugins/start/nvpm-tree.nvim
 ```
 
@@ -116,40 +122,44 @@ No build step is required — nvpm-tree.nvim is pure Lua.
 
 Inside the tree window:
 
-| Key | Action |
-|-----|--------|
-| `<CR>`, `o` | Open file/directory (toggle expand/collapse on dirs) |
-| `l` | Expand directory |
-| `h` | Collapse directory |
-| `<Space>`, `za` | Toggle expand/collapse |
-| `a` | Create new file |
-| `A` | Create new directory |
-| `d` | Delete file/directory |
-| `r` | Rename file/directory |
-| `R`, `<F5>` | Refresh tree |
-| `q` | Close tree |
-| `j/k` | Navigate up/down |
-| `-`, `u` | Go to parent directory |
-| `C` | Change root to directory under cursor |
-| `?` | Show help |
+| Key             | Action                                               |
+| --------------- | ---------------------------------------------------- |
+| `<CR>`, `o`     | Open file/directory (toggle expand/collapse on dirs) |
+| `l`             | Expand directory                                     |
+| `h`             | Collapse directory                                   |
+| `<Space>`, `za` | Toggle expand/collapse                               |
+| `a`             | Create new file                                      |
+| `A`             | Create new directory                                 |
+| `d`             | Delete file/directory                                |
+| `r`             | Rename file/directory                                |
+| `R`, `<F5>`     | Refresh tree                                         |
+| `q`             | Close tree                                           |
+| `j/k`           | Navigate up/down                                     |
+| `-`, `u`        | Go to parent directory                               |
+| `C`             | Change root to directory under cursor                |
+| `?`             | Show help                                            |
 
 ### File Operations
 
 nvpm-tree.nvim supports common file operations directly from the tree:
 
 #### Create File (`a`)
+
 Press `a` to create a new file in the current directory (or parent directory if cursor is on a file).
 You will be prompted to enter the filename.
 
 #### Create Directory (`A`)
+
 Press `A` to create a new directory in the current directory (or parent directory if cursor is on a file).
 You will be prompted to enter the directory name.
 
 #### Delete (`d`)
+
 Press `d` to delete the file or directory at cursor. You will be asked to confirm the deletion.
 For directories, all contents will be deleted recursively.
 
 #### Rename (`r`)
+
 Press `r` to rename the file or directory at cursor. You will be prompted to enter the new name.
 Open buffers under the renamed path are automatically retargeted.
 
@@ -220,11 +230,13 @@ the footer, aggregated over every node scanned so far.
 ## Comparison
 
 ### vs vpm-tree.vim
+
 - 💪 No external Go CLI binary to build or install
 - ⚡ Runs entirely in-process via `vim.loop`, no JSON round-trip
 - ✅ Neovim-native: `<Plug>` mappings, `vim.keymap.set`, Lua `setup()`
 
 ### vs nvim-tree.lua / neo-tree.nvim
+
 - 🔧 Minimal, single-purpose implementation mirroring vpm-tree.vim's UI/UX
 - 📝 Same key bindings and file-operation workflow as vpm-tree.vim
 
@@ -257,6 +269,7 @@ MIT License
 nvpm-tree.nvim is a Neovim port of
 [vpm-tree.vim](https://github.com/ue555/vpm-tree.vim), which was in turn
 inspired by:
+
 - [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
 - [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 - [NERDTree](https://github.com/preservim/nerdtree)
