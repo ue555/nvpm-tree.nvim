@@ -184,7 +184,7 @@ require("nvpm-tree").setup({
     ".idea", ".vscode",
   },
   include_git = true,        -- Gitステータスマーカーを表示
-  auto_close = true,         -- ファイルを開いたときに自動的にツリーを閉じる
+  auto_close = false,        -- ファイルを開いたときに自動的にツリーを閉じる
 })
 ```
 

@@ -88,5 +88,6 @@ Passed to `require("nvpm-tree").setup({...})`:
     ignore_patterns     (table)   List of glob patterns to skip.
     include_git         (boolean) Show git status markers. Default: true
     auto_close          (boolean) Close tree after opening a file.
+                                  Default: false
 
  vim:tw=78:ts=8:noet:ft=help:norl:

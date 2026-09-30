@@ -185,7 +185,7 @@ require("nvpm-tree").setup({
     ".idea", ".vscode",
   },
   include_git = true,        -- show git status markers
-  auto_close = true,         -- close tree after opening a file
+  auto_close = false,        -- close tree after opening a file
 })
 ```
 

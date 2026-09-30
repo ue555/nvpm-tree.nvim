@@ -25,7 +25,7 @@ M.defaults = {
     ".vscode",
   },
   include_git = true,
-  auto_close = true, -- close tree window after opening a file
+  auto_close = false, -- close tree window after opening a file
   icons = {
     directory_closed = "▶",
     directory_open = "▼",
