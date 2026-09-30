@@ -1,0 +1,92 @@
+*nvpm-tree.txt*  A fast, git-aware file tree explorer for Neovim
+
+==============================================================================
+CONTENTS                                                *nvpm-tree-contents*
+
+    1. Introduction ............... |nvpm-tree-introduction|
+    2. Setup ....................... |nvpm-tree-setup|
+    3. Commands .................... |nvpm-tree-commands|
+    4. Mappings .................... |nvpm-tree-mappings|
+    5. Configuration ............... |nvpm-tree-configuration|
+
+==============================================================================
+1. Introduction                                     *nvpm-tree-introduction*
+
+nvpm-tree.nvim is a Neovim-native reimplementation of vpm-tree.vim
+(https://github.com/ue555/vpm-tree.vim), providing the same file tree
+explorer UI and key bindings, implemented purely in Lua using |vim.loop|
+for filesystem access and `git status --porcelain` for git integration.
+No external CLI binary is required.
+
+==============================================================================
+2. Setup                                                   *nvpm-tree-setup*
+
+Using lazy.nvim: >lua
+    {
+      "kouji/nvpm-tree.nvim",
+      opts = {},
+    }
+<
+Or call setup() manually: >lua
+    require("nvpm-tree").setup({
+      width = 35,
+      position = "left",
+    })
+<
+==============================================================================
+3. Commands                                             *nvpm-tree-commands*
+
+:NvpmTreeToggle         Toggle the tree window.
+:NvpmTreeOpen           Open the tree window.
+:NvpmTreeClose          Close the tree window.
+:NvpmTreeRefresh        Refresh the tree contents.
+:NvpmTreeFocus          Move focus into the tree window.
+:NvpmTreeFind           Reveal the current file in the tree.
+
+==============================================================================
+4. Mappings                                             *nvpm-tree-mappings*
+
+Inside the tree buffer:
+
+    <CR>, o     Open file / toggle directory
+    l           Expand directory
+    h           Collapse directory
+    <Space>     Toggle expand/collapse
+    a           Create new file
+    A           Create new directory
+    d           Delete file/directory
+    r           Rename file/directory
+    R, <F5>     Refresh tree
+    q           Close tree
+    j/k         Navigate up/down
+    -, u        Go to parent directory
+    C           Change root to directory under cursor
+    ?           Show help
+
+<Plug> mappings are available for custom binding:
+
+    <Plug>(nvpm-tree-toggle)
+    <Plug>(nvpm-tree-open)
+    <Plug>(nvpm-tree-close)
+    <Plug>(nvpm-tree-refresh)
+    <Plug>(nvpm-tree-focus)
+    <Plug>(nvpm-tree-find)
+
+Example: >lua
+    vim.keymap.set("n", "<leader>e", "<Plug>(nvpm-tree-toggle)")
+<
+==============================================================================
+5. Configuration                                   *nvpm-tree-configuration*
+
+Passed to `require("nvpm-tree").setup({...})`:
+
+    width               (number)  Tree window width. Default: 35
+    position            (string)  "left" or "right". Default: "left"
+    show_hidden         (boolean) Show dotfiles. Default: false
+    max_depth           (number)  Unused by lazy-loading scanner; reserved.
+    sort_by             (string)  "name", "size", or "modified".
+    ignore_patterns     (table)   List of glob patterns to skip.
+    include_git         (boolean) Show git status markers. Default: true
+    auto_close          (boolean) Close tree after opening a file.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
